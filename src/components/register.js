@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/no-direct-mutation-state */
 import React, { Component } from "react";
-import axios from "axios";
-
 import {
   Container,
   Card,
@@ -150,7 +148,8 @@ export default class AddUser extends Component {
   };
 
   // ****** checking for userName  ******
-  handleChangeuserName = ({ target }) => {
+  // https://stackoverflow.com/questions/9626283/a-za-z0-9-excluding-spaces <= refered for regex for username
+  handleChangeUserName = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
 
@@ -160,7 +159,7 @@ export default class AddUser extends Component {
           placement="right"
           overlay={
             <Tooltip id="tooltip-disabled">
-              {value.match("^[a-zA-Z-]+$") != null
+              {value.match("^[A-Za-z0-9_@./#&+-][^\\s]*$") != null
                 ? "Valid Format ✔"
                 : "userName cannot be empty"}
             </Tooltip>
@@ -169,7 +168,7 @@ export default class AddUser extends Component {
           <span className="d-inline-block">
             <img
               src={
-                value.match("^[a-zA-Z-]+$") != null
+                value.match("^[A-Za-z0-9_@./#&+-][^\\s]*$") != null
                   ? userName_formatcorrect
                   : userName_formatwrong
               }
@@ -179,7 +178,9 @@ export default class AddUser extends Component {
           </span>
         </OverlayTrigger>
       ),
-      userNameFormatMatched: !(value.match("^[a-zA-Z-]+$") != null),
+      userNameFormatMatched: !(
+        value.match("^[A-Za-z0-9_@./#&+-][^\\s]*$") != null
+      ),
     });
   };
   handleChangeEmail = ({ target }) => {
@@ -379,7 +380,7 @@ export default class AddUser extends Component {
                   type="text"
                   placeholder="Ex: Sundar"
                   name="userName"
-                  onChange={this.handleChangeuserName}
+                  onChange={this.handleChangeUserName}
                 />
                 <InputGroup.Append>
                   {this.state.userNamePatternMsg}
