@@ -26,10 +26,10 @@ import password_formatcorrect from "../assets/images/req_for_adduser/password_fo
 import password_formatwrong from "../assets/images/req_for_adduser/password_formatwrong.jpg";
 import name_default from "../assets/images/req_for_adduser/name_default.jpg";
 
-import lname_formatcorrect from "../assets/images/req_for_adduser/img_correct.jpg";
-import lname_formatwrong from "../assets/images/req_for_adduser/img_wrong.jpg";
-import fname_formatcorrect from "../assets/images/req_for_adduser/img_correct.jpg";
-import fname_formatwrong from "../assets/images/req_for_adduser/img_wrong.jpg";
+// import lname_formatcorrect from "../assets/images/req_for_adduser/img_correct.jpg";
+// import lname_formatwrong from "../assets/images/req_for_adduser/img_wrong.jpg";
+import fullName_formatcorrect from "../assets/images/req_for_adduser/img_correct.jpg";
+import fullName_formatwrong from "../assets/images/req_for_adduser/img_wrong.jpg";
 import goku_default from "../assets/images/req_for_adduser/goku_default.png";
 
 import goku_kid from "../assets/images/req_for_adduser/goku_kid.jpg";
@@ -47,16 +47,16 @@ import goku_ssj7 from "../assets/images/req_for_adduser/goku_ssj7.jpg";
 
 export default class AddUser extends Component {
   state = {
-    fname: "",
-    lname: "",
-    fullName: function () {
-      return this.fname + " " + this.lname;
-    },
+    fullName: "",
+    // lname: "",
+    // fullName: function () {
+    //   return this.fullName + " " + this.lname;
+    // },
     email: "",
     password: "",
     atype: "",
     message: "",
-    fnamePatternMsg: (
+    fullNamePatternMsg: (
       <OverlayTrigger
         placement="right"
         overlay={<Tooltip id="tooltip-disabled">Enter Firstname</Tooltip>}
@@ -66,16 +66,16 @@ export default class AddUser extends Component {
         </span>
       </OverlayTrigger>
     ),
-    lnamePatternMsg: (
-      <OverlayTrigger
-        placement="right"
-        overlay={<Tooltip id="tooltip-disabled">Enter Lastname</Tooltip>}
-      >
-        <span className="d-inline-block">
-          <img src={name_default} alt="name_default" height="50px" />
-        </span>
-      </OverlayTrigger>
-    ),
+    // lnamePatternMsg: (
+    //   <OverlayTrigger
+    //     placement="right"
+    //     overlay={<Tooltip id="tooltip-disabled">Enter Lastname</Tooltip>}
+    //   >
+    //     <span className="d-inline-block">
+    //       <img src={name_default} alt="name_default" height="50px" />
+    //     </span>
+    //   </OverlayTrigger>
+    // ),
 
     emailPatternMsg: (
       <OverlayTrigger
@@ -97,34 +97,44 @@ export default class AddUser extends Component {
         </span>
       </OverlayTrigger>
     ),
-    fnameFormatMatched: true,
-    lnameFormatMatched: true,
+    fullNameFormatMatched: true,
+    // lnameFormatMatched: true,
     emailFormatMatched: true,
     passwordFormatMatched: true,
     register_visibility: "",
     redirect: false,
-    passwordStrength: { variant: "secondary", now: 0 },
+    passwordStrengthBar: { variant: "secondary", now: 0 },
     cardImg: function (value) {
       switch (value) {
         case 10:
+          this.passwordStrengthBar.variant = "secondary";
           return goku_kid;
         case 20:
+          this.passwordStrengthBar.variant = "danger";
           return goku_young;
         case 30:
+          this.passwordStrengthBar.variant = "dark";
           return goku_adult;
         case 40:
+          this.passwordStrengthBar.variant = "warning";
           return goku_ssj1;
         case 50:
+          this.passwordStrengthBar.variant = "success";
           return goku_ssj2;
         case 60:
+          this.passwordStrengthBar.variant = "warning";
           return goku_ssj3;
         case 70:
+          this.passwordStrengthBar.variant = "dark";
           return goku_ssj4;
         case 80:
+          this.passwordStrengthBar.variant = "warning";
           return goku_ssj5;
         case 90:
+          this.passwordStrengthBar.variant = "danger";
           return goku_ssj6;
         case 100:
+          this.passwordStrengthBar.variant = "primary";
           return goku_ssj7;
         // break;
         default:
@@ -160,69 +170,69 @@ export default class AddUser extends Component {
     },
   };
 
-  // ****** checking for fname and lname ******
-  handleChangeNames = ({ target }) => {
+  // ****** checking for fullName and lname ******
+  handleChangeFullName = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
 
-    if (name == "fname") {
-      this.setState({
-        fnamePatternMsg: (
-          <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="tooltip-disabled">
-                {value.match("^[a-zA-Z-]+$") != null
-                  ? "Valid Format ✔"
-                  : "Firstname cannot be empty"}
-              </Tooltip>
-            }
-          >
-            <span className="d-inline-block">
-              <img
-                src={
-                  value.match("^[a-zA-Z-]+$") != null
-                    ? fname_formatcorrect
-                    : fname_formatwrong
-                }
-                alt=""
-                height="50px"
-              />
-            </span>
-          </OverlayTrigger>
-        ),
-        fnameFormatMatched: !(value.match("^[a-zA-Z-]+$") != null),
-      });
-    }
-    if (name == "lname") {
-      this.setState({
-        lnamePatternMsg: (
-          <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="tooltip-disabled">
-                {value.match("^[a-zA-Z-]+$") != null
-                  ? "Valid Format ✔"
-                  : "Lastname cannot be empty"}
-              </Tooltip>
-            }
-          >
-            <span className="d-inline-block">
-              <img
-                src={
-                  value.match("^[a-zA-Z-]+$") != null
-                    ? lname_formatcorrect
-                    : lname_formatwrong
-                }
-                alt=""
-                height="50px"
-              />
-            </span>
-          </OverlayTrigger>
-        ),
-        lnameFormatMatched: false,
-      });
-    }
+    // if (name == "fullName") {
+    this.setState({
+      fullNamePatternMsg: (
+        <OverlayTrigger
+          placement="right"
+          overlay={
+            <Tooltip id="tooltip-disabled">
+              {value.match("^[a-zA-Z-]+$") != null
+                ? "Valid Format ✔"
+                : "Fullname cannot be empty"}
+            </Tooltip>
+          }
+        >
+          <span className="d-inline-block">
+            <img
+              src={
+                value.match("^[a-zA-Z-]+$") != null
+                  ? fullName_formatcorrect
+                  : fullName_formatwrong
+              }
+              alt=""
+              height="50px"
+            />
+          </span>
+        </OverlayTrigger>
+      ),
+      fullNameFormatMatched: !(value.match("^[a-zA-Z-]+$") != null),
+    });
+    // }
+    // if (name == "lname") {
+    //   this.setState({
+    //     lnamePatternMsg: (
+    //       <OverlayTrigger
+    //         placement="right"
+    //         overlay={
+    //           <Tooltip id="tooltip-disabled">
+    //             {value.match("^[a-zA-Z-]+$") != null
+    //               ? "Valid Format ✔"
+    //               : "Lastname cannot be empty"}
+    //           </Tooltip>
+    //         }
+    //       >
+    //         <span className="d-inline-block">
+    //           <img
+    //             src={
+    //               value.match("^[a-zA-Z-]+$") != null
+    //                 ? lname_formatcorrect
+    //                 : lname_formatwrong
+    //             }
+    //             alt=""
+    //             height="50px"
+    //           />
+    //         </span>
+    //       </OverlayTrigger>
+    //     ),
+    //     lnameFormatMatched: false,
+    //   });
+    // }
   };
   handleChangeEmail = ({ target }) => {
     const { name, value } = target;
@@ -301,9 +311,6 @@ export default class AddUser extends Component {
         ),
         passwordFormatMatched: false,
       });
-      // this.state.passwordPatternMsg = (
-      //   <img src={password_formatcorrect} height="50px" />
-      // );
     } else {
       console.log(value);
       this.setState({
@@ -330,60 +337,56 @@ export default class AddUser extends Component {
         passwordFormatMatched: true,
       });
     }
-    this.state.passwordStrength.now = 0;
+    this.state.passwordStrengthBar.now = 0;
     if (value.match("")) {
-      this.state.passwordStrength.variant = "danger";
-      this.state.passwordStrength.now = 0;
+      this.state.passwordStrengthBar.variant = "danger";
+      this.state.passwordStrengthBar.now = 0;
     }
     if (value.match("^(?=.*[a-z])")) {
-      this.state.passwordStrength.variant = "secondary";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
     if (value.match("^(?=.*[A-Z])")) {
-      this.state.passwordStrength.variant = "danger";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
     if (value.match("^(?=.*[0-9])")) {
-      this.state.passwordStrength.variant = "dark";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
     if (value.match("^(?=.*[!@#$%^&*])")) {
-      this.state.passwordStrength.variant = "warning";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
-    if (value.match("^(?=.{5,})")) {
-      this.state.passwordStrength.variant = "success";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+    if (value.match("^(?=.{5})")) {
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
-    if (value.match("^(?=.{6,})")) {
-      this.state.passwordStrength.variant = "warning";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+    if (value.match("^(?=.{6})")) {
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
-    if (value.match("^(?=.{7,})")) {
-      this.state.passwordStrength.variant = "dark";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+    if (value.match("^(?=.{7})")) {
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
-    if (value.match("^(?=.{8,})")) {
-      this.state.passwordStrength.variant = "warning";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+    if (value.match("^(?=.{8})")) {
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
-    if (value.match("^(?=.{9,})")) {
-      this.state.passwordStrength.variant = "danger";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+    if (value.match("^(?=.{9})")) {
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
-    if (
-      value.match(
-        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{10,})"
-      )
-    ) {
-      this.state.passwordStrength.variant = "primary";
-      this.state.passwordStrength.now = this.state.passwordStrength.now + 10;
+    if (value.match("^(?=.{10,})")) {
+      this.state.passwordStrengthBar.now =
+        this.state.passwordStrengthBar.now + 10;
     }
   };
 
   responseGoogleSucess = (response) => {
     const payLoad = {
-      fname: response.profileObj.name,
+      fullName: response.profileObj.name,
       email: response.profileObj.email,
       googleId: response.profileObj.googleId,
     };
@@ -418,7 +421,7 @@ export default class AddUser extends Component {
         <Container className="logreg-forms App-header py-5">
           <Card
             border={this.state.cardBorderVariant(
-              this.state.passwordStrength.now
+              this.state.passwordStrengthBar.now
             )}
             style={{ width: "50rem" }}
           >
@@ -428,7 +431,7 @@ export default class AddUser extends Component {
                 Character form represents strength of your password &nbsp;
                 &nbsp; &nbsp; &nbsp;
                 <img
-                  src={this.state.cardImg(this.state.passwordStrength.now)}
+                  src={this.state.cardImg(this.state.passwordStrengthBar.now)}
                   height="200px"
                   className="rounded-circle"
                 />
@@ -436,8 +439,8 @@ export default class AddUser extends Component {
                 <ProgressBar
                   striped
                   animated
-                  variant={this.state.passwordStrength.variant}
-                  now={this.state.passwordStrength.now}
+                  variant={this.state.passwordStrengthBar.variant}
+                  now={this.state.passwordStrengthBar.now}
                 />
               </Card.Title>
               {/* <Card.Text>
@@ -449,20 +452,12 @@ export default class AddUser extends Component {
           </Card>
           <Alert variant={this.state.atype}>{this.state.message}</Alert>
           <Form className="form-signin" onSubmit={this.submit}>
-            <Nav fill variant="pills" activeKey="2" defaultActiveKey="/home">
-              {/* <Nav.Item>
-                <Nav.Link
-                  href="/"
-                  onClick={localStorage.setItem("loadComponent", "login")}
-                  eventKey="1"
-                >
-                  Login
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="2">Register</Nav.Link>
-              </Nav.Item> */}
-            </Nav>
+            <Nav
+              fill
+              variant="pills"
+              activeKey="2"
+              defaultActiveKey="/home"
+            ></Nav>
             <Form.Row as={Row} controlId="formBasicText">
               <Form.Label column sm="2">
                 Full&nbsp;Name
@@ -471,30 +466,15 @@ export default class AddUser extends Component {
                 <Form.Control
                   type="text"
                   placeholder="Ex: Sundar"
-                  name="fname"
-                  onChange={this.handleChangeNames}
+                  name="fullName"
+                  onChange={this.handleChangeFullName}
                 />
                 <InputGroup.Append>
-                  {this.state.fnamePatternMsg}
+                  {this.state.fullNamePatternMsg}
                 </InputGroup.Append>
               </InputGroup>
             </Form.Row>
-            {/* <Form.Row as={Row} controlId="formBasicText">
-              <Form.Label column sm="2">
-                Last&nbsp;Name
-              </Form.Label>
-              <InputGroup>
-                <Form.Control
-                  type="text"
-                  placeholder="Ex: Pichai"
-                  name="lname"
-                  onChange={this.handleChangeNames}
-                />
-                <InputGroup.Append>
-                  {this.state.lnamePatternMsg}
-                </InputGroup.Append>
-              </InputGroup>
-            </Form.Row> */}
+
             <Form.Row as={Row} controlId="formBasicText">
               <Form.Label column sm="2">
                 Email
@@ -502,7 +482,6 @@ export default class AddUser extends Component {
               <InputGroup>
                 <Form.Control
                   type="text"
-                  // pattern="[a-z]"
                   placeholder="Ex: sundarp12@gmail.com"
                   name="email"
                   onChange={this.handleChangeEmail}
@@ -530,32 +509,9 @@ export default class AddUser extends Component {
 
               {/* <Form.Row.Text id="inputGroupPrepend">@</Form.Row.Text> */}
             </Form.Row>
-            {/* <Form.Row> */}
 
-            {/* </Form.Row> */}
-            {/* <OverlayTrigger
-              placement="right"
-              overlay={
-                <Tooltip id="tooltip-disabled">
-                  {this.state.emailFormatMatched ||
-                  this.state.passwordFormatMatched
-                    ? "Please enter valid inputs !"
-                    : "Good to Go"}
-                </Tooltip>
-              }
-            >
-              <span className="d-inline-block">
-                <Button
-                  variant="primary"
-                  type="submit"
-                  
-                >
-                  Register
-                </Button>
-              </span>
-            </OverlayTrigger> */}
             <Button
-              variant={this.state.passwordStrength.variant}
+              variant={this.state.passwordStrengthBar.variant}
               type="submit"
               block
             >
