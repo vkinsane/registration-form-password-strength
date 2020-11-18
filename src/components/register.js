@@ -17,7 +17,6 @@ import {
   ProgressBar,
 } from "react-bootstrap";
 
-import { Redirect } from "react-router-dom";
 import email_default from "../assets/images/req_for_adduser/email_default.jpg";
 import email_formatcorrect from "../assets/images/req_for_adduser/email_formatcorrect.jpg";
 import email_formatwrong from "../assets/images/req_for_adduser/email_formatwrong.jpg";
@@ -26,10 +25,8 @@ import password_formatcorrect from "../assets/images/req_for_adduser/password_fo
 import password_formatwrong from "../assets/images/req_for_adduser/password_formatwrong.jpg";
 import name_default from "../assets/images/req_for_adduser/name_default.jpg";
 
-// import lname_formatcorrect from "../assets/images/req_for_adduser/img_correct.jpg";
-// import lname_formatwrong from "../assets/images/req_for_adduser/img_wrong.jpg";
-import fullName_formatcorrect from "../assets/images/req_for_adduser/img_correct.jpg";
-import fullName_formatwrong from "../assets/images/req_for_adduser/img_wrong.jpg";
+import userName_formatcorrect from "../assets/images/req_for_adduser/img_correct.jpg";
+import userName_formatwrong from "../assets/images/req_for_adduser/img_wrong.jpg";
 import goku_default from "../assets/images/req_for_adduser/goku_default.png";
 
 import goku_kid from "../assets/images/req_for_adduser/goku_kid.jpg";
@@ -47,16 +44,12 @@ import goku_ssj7 from "../assets/images/req_for_adduser/goku_ssj7.jpg";
 
 export default class AddUser extends Component {
   state = {
-    fullName: "",
-    // lname: "",
-    // fullName: function () {
-    //   return this.fullName + " " + this.lname;
-    // },
+    userName: "",
     email: "",
     password: "",
     atype: "",
     message: "",
-    fullNamePatternMsg: (
+    userNamePatternMsg: (
       <OverlayTrigger
         placement="right"
         overlay={<Tooltip id="tooltip-disabled">Enter Firstname</Tooltip>}
@@ -66,17 +59,6 @@ export default class AddUser extends Component {
         </span>
       </OverlayTrigger>
     ),
-    // lnamePatternMsg: (
-    //   <OverlayTrigger
-    //     placement="right"
-    //     overlay={<Tooltip id="tooltip-disabled">Enter Lastname</Tooltip>}
-    //   >
-    //     <span className="d-inline-block">
-    //       <img src={name_default} alt="name_default" height="50px" />
-    //     </span>
-    //   </OverlayTrigger>
-    // ),
-
     emailPatternMsg: (
       <OverlayTrigger
         placement="right"
@@ -97,12 +79,9 @@ export default class AddUser extends Component {
         </span>
       </OverlayTrigger>
     ),
-    fullNameFormatMatched: true,
-    // lnameFormatMatched: true,
+    userNameFormatMatched: true,
     emailFormatMatched: true,
     passwordFormatMatched: true,
-    register_visibility: "",
-    redirect: false,
     passwordStrengthBar: { variant: "secondary", now: 0 },
     cardImg: function (value) {
       switch (value) {
@@ -170,21 +149,20 @@ export default class AddUser extends Component {
     },
   };
 
-  // ****** checking for fullName and lname ******
-  handleChangeFullName = ({ target }) => {
+  // ****** checking for userName  ******
+  handleChangeuserName = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
 
-    // if (name == "fullName") {
     this.setState({
-      fullNamePatternMsg: (
+      userNamePatternMsg: (
         <OverlayTrigger
           placement="right"
           overlay={
             <Tooltip id="tooltip-disabled">
               {value.match("^[a-zA-Z-]+$") != null
                 ? "Valid Format ✔"
-                : "Fullname cannot be empty"}
+                : "userName cannot be empty"}
             </Tooltip>
           }
         >
@@ -192,8 +170,8 @@ export default class AddUser extends Component {
             <img
               src={
                 value.match("^[a-zA-Z-]+$") != null
-                  ? fullName_formatcorrect
-                  : fullName_formatwrong
+                  ? userName_formatcorrect
+                  : userName_formatwrong
               }
               alt=""
               height="50px"
@@ -201,38 +179,8 @@ export default class AddUser extends Component {
           </span>
         </OverlayTrigger>
       ),
-      fullNameFormatMatched: !(value.match("^[a-zA-Z-]+$") != null),
+      userNameFormatMatched: !(value.match("^[a-zA-Z-]+$") != null),
     });
-    // }
-    // if (name == "lname") {
-    //   this.setState({
-    //     lnamePatternMsg: (
-    //       <OverlayTrigger
-    //         placement="right"
-    //         overlay={
-    //           <Tooltip id="tooltip-disabled">
-    //             {value.match("^[a-zA-Z-]+$") != null
-    //               ? "Valid Format ✔"
-    //               : "Lastname cannot be empty"}
-    //           </Tooltip>
-    //         }
-    //       >
-    //         <span className="d-inline-block">
-    //           <img
-    //             src={
-    //               value.match("^[a-zA-Z-]+$") != null
-    //                 ? lname_formatcorrect
-    //                 : lname_formatwrong
-    //             }
-    //             alt=""
-    //             height="50px"
-    //           />
-    //         </span>
-    //       </OverlayTrigger>
-    //     ),
-    //     lnameFormatMatched: false,
-    //   });
-    // }
   };
   handleChangeEmail = ({ target }) => {
     const { name, value } = target;
@@ -384,37 +332,6 @@ export default class AddUser extends Component {
     }
   };
 
-  responseGoogleSucess = (response) => {
-    const payLoad = {
-      fullName: response.profileObj.name,
-      email: response.profileObj.email,
-      googleId: response.profileObj.googleId,
-    };
-    console.log(response);
-    axios({
-      url: "http://localhost:5000/users/google/register",
-      method: "POST",
-      data: payLoad,
-    })
-      .then(() => {
-        this.setState({
-          atype: "success",
-          message: "Sign Up with Google Successfull",
-          redirect: true,
-        });
-        console.log("New User Data Has Been Sent to User");
-      })
-      .catch(() => {
-        this.setState({
-          atype: "danger",
-          message: "There was some problem !",
-        });
-        console.log("Internal Server error");
-      });
-  };
-  responseGoogleFailure = (response) => {
-    console.log("Failed");
-  };
   render() {
     return (
       <React.Fragment>
@@ -443,11 +360,6 @@ export default class AddUser extends Component {
                   now={this.state.passwordStrengthBar.now}
                 />
               </Card.Title>
-              {/* <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-               
-              </Card.Text> */}
             </Card.Body>
           </Card>
           <Alert variant={this.state.atype}>{this.state.message}</Alert>
@@ -466,11 +378,11 @@ export default class AddUser extends Component {
                 <Form.Control
                   type="text"
                   placeholder="Ex: Sundar"
-                  name="fullName"
-                  onChange={this.handleChangeFullName}
+                  name="userName"
+                  onChange={this.handleChangeuserName}
                 />
                 <InputGroup.Append>
-                  {this.state.fullNamePatternMsg}
+                  {this.state.userNamePatternMsg}
                 </InputGroup.Append>
               </InputGroup>
             </Form.Row>
@@ -506,8 +418,6 @@ export default class AddUser extends Component {
                   {this.state.passwordPatternMsg}
                 </InputGroup.Append>
               </InputGroup>
-
-              {/* <Form.Row.Text id="inputGroupPrepend">@</Form.Row.Text> */}
             </Form.Row>
 
             <Button
@@ -519,7 +429,6 @@ export default class AddUser extends Component {
             </Button>
             {/* *****************Google Sign-Up button ***************/}
           </Form>
-          {this.state.redirect && <Redirect to="/" />}
         </Container>
       </React.Fragment>
     );
