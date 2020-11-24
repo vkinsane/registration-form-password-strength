@@ -327,7 +327,7 @@ export default class AddUser extends Component {
       this.state.passwordStrengthBar.now =
         this.state.passwordStrengthBar.now + 10;
     }
-    if (value.match("^(?=.{10,})")) {
+    if (value.match("^(?=.{10})")) {
       this.state.passwordStrengthBar.now =
         this.state.passwordStrengthBar.now + 10;
     }
@@ -341,13 +341,15 @@ export default class AddUser extends Component {
             border={this.state.cardBorderVariant(
               this.state.passwordStrengthBar.now
             )}
-            style={{ width: "50rem" }}
+            style={{ width: "53rem" }}
           >
-            <Card.Header>Check the STRENGTH of your password</Card.Header>
+            <Card.Header>
+              {/*🔥💪⚡  */}
+              Check the 💪 STRENGTH 🔥 of your password
+            </Card.Header>
             <Card.Body>
-              <Card.Title>
-                Character form represents strength of your password &nbsp;
-                &nbsp; &nbsp; &nbsp;
+              <Card.Title style={{ fontSize: "24px" }}>
+                Character form represents strength of your password&nbsp;&nbsp;
                 <img
                   src={this.state.cardImg(this.state.passwordStrengthBar.now)}
                   height="200px"
@@ -373,7 +375,7 @@ export default class AddUser extends Component {
             ></Nav>
             <Form.Row as={Row} controlId="formBasicText">
               <Form.Label column sm="2">
-                Full&nbsp;Name
+                User&nbsp;Name
               </Form.Label>
               <InputGroup>
                 <Form.Control
