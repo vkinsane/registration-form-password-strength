@@ -345,7 +345,8 @@ export default class AddUser extends Component {
           >
             <Card.Header>
               {/*🔥💪⚡  */}
-              Check the 💪 STRENGTH 🔥 of your password
+              {/* Check the 💪 STRENGTH 🔥 of your password */}
+              Check the 💪 STRENGTH of your password
             </Card.Header>
             <Card.Body>
               <Card.Title style={{ fontSize: "24px" }}>
