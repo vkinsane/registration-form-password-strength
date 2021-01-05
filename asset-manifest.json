@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/registration-form-password-strength/static/css/main.17abea29.chunk.css",
-    "main.js": "/registration-form-password-strength/static/js/main.4a319e6a.chunk.js",
-    "main.js.map": "/registration-form-password-strength/static/js/main.4a319e6a.chunk.js.map",
+    "main.js": "/registration-form-password-strength/static/js/main.d63ab95e.chunk.js",
+    "main.js.map": "/registration-form-password-strength/static/js/main.d63ab95e.chunk.js.map",
     "runtime-main.js": "/registration-form-password-strength/static/js/runtime-main.15c7addd.js",
     "runtime-main.js.map": "/registration-form-password-strength/static/js/runtime-main.15c7addd.js.map",
     "static/css/2.1a02f21c.chunk.css": "/registration-form-password-strength/static/css/2.1a02f21c.chunk.css",
@@ -40,6 +40,6 @@
     "static/css/2.1a02f21c.chunk.css",
     "static/js/2.b5fbfc9d.chunk.js",
     "static/css/main.17abea29.chunk.css",
-    "static/js/main.4a319e6a.chunk.js"
+    "static/js/main.d63ab95e.chunk.js"
   ]
 }
